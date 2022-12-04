@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VisiteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +53,16 @@ class Visite
      * @ORM\Column(type="integer", nullable=true)
      */
     private $tempmax;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=environnement::class)
+     */
+    private $environnements;
+
+    public function __construct()
+    {
+        $this->environnements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -146,6 +158,30 @@ class Visite
     public function setTempmax(?int $tempmax): self
     {
         $this->tempmax = $tempmax;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, environnement>
+     */
+    public function getEnvironnements(): Collection
+    {
+        return $this->environnements;
+    }
+
+    public function addEnvironnement(environnement $environnement): self
+    {
+        if (!$this->environnements->contains($environnement)) {
+            $this->environnements[] = $environnement;
+        }
+
+        return $this;
+    }
+
+    public function removeEnvironnement(environnement $environnement): self
+    {
+        $this->environnements->removeElement($environnement);
 
         return $this;
     }
