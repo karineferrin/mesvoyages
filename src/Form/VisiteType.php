@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Environnement;
 use App\Entity\Visite;
 use DateTime;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -41,7 +42,7 @@ class VisiteType extends AbstractType
                 'label' => 't° max'
             ])
             ->add('environnements', EntityType::class, [
-                'class' => \App\Entity\environnement::class,
+                'class' => Environnement::class,
                 'choice_label' => 'nom',
                 'multiple' => true,
                 'required' => false
